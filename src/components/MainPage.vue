@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container class="mt-10">
         <v-row class="text-center">
             <v-col class="mb-4">
                 <h1 class="display-2 mb-3">
@@ -14,7 +14,7 @@
                 </p>
             </v-col>
 
-            <v-col class="mb-5" cols="12">
+            <v-col class="ma-0" cols="12">
                 <h2 class="headline font-weight-bold mb-3">How many lines will be on your plan?</h2>
             </v-col>
         </v-row>
