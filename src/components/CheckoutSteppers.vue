@@ -16,13 +16,16 @@
                         ></v-img>
 
                         {{ this.$route.query.title }}
+                        {{ this.$route.query.price }}
+                        line: {{ this.$route.query.lines }}
                     </v-col>
 
                     <br />
                     <v-btn color="primary" @click="e6 = 2"> Continue </v-btn>
-                    <v-btn text>
-                        <router-link style="text-decoration: none; color: inherit" to="/"> Cancel </router-link>
-                    </v-btn>
+
+                    <router-link style="text-decoration: none; color: inherit" to="/">
+                        <v-btn text> Cancel </v-btn>
+                    </router-link>
                 </v-stepper-content>
 
                 <v-stepper-step editable :complete="e6 > 2" step="2"> Create Account </v-stepper-step>
