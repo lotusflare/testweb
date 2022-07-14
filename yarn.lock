@@ -1551,11 +1551,6 @@
   optionalDependencies:
     prettier "^1.18.2 || ^2.0.0"
 
-"@vue/devtools-api@^6.1.4":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.2.0.tgz#e3dc98a0cce8e87292745e2d24c9ee8c274a023b"
-  integrity sha512-pF1G4wky+hkifDiZSWn8xfuLOJI1ZXtuambpBEYaf7Xaf6zC/pM29rvAGpd3qaGXnr4BAXU1Pxz/VfvBGwexGA==
-
 "@vue/vue-loader-v15@npm:vue-loader@^15.9.7":
   version "15.10.0"
   resolved "https://registry.npmmirror.com/vue-loader/-/vue-loader-15.10.0.tgz#2a12695c421a2a2cc2138f05a949d04ed086e38b"
@@ -5740,12 +5735,10 @@ vary@~1.1.2:
   resolved "https://registry.npmmirror.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
-vee-validate@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-4.6.0.tgz#d429f3ec0fb3c8d65ad2a496592047509dcbef2a"
-  integrity sha512-gk63DO3Q/oNRT7o9bV5yIWbp47dE21+whapQOA2ToPU4FFDqgkKe6KDszMtcZp3DoPwgS/91ndTY8D5lKr/w0g==
-  dependencies:
-    "@vue/devtools-api" "^6.1.4"
+vee-validate@3:
+  version "3.4.14"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-3.4.14.tgz#51f91c01d6660c43c6252c417c89fb07cdf8b8dd"
+  integrity sha512-Hqqic8G9WcRSIzCxiCPqMZv4qB8JE1lIQqIOLDm2K5BXUiL8d4a2+kqkanv8gQSGDzYpnCQZ7BO/T99Aj05T1Q==
 
 vue-cli-plugin-vuetify@~2.5.1:
   version "2.5.1"
