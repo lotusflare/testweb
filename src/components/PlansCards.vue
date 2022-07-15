@@ -29,12 +29,12 @@
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <router-link
+                            <!-- <router-link
                                 style="text-decoration: none; color: inherit"
                                 :to="`/checkout?title=${item.title}&price=${item.price}&lines=${item.lines}`"
-                            >
-                                <v-btn color="black" text> Get Plan </v-btn>
-                            </router-link>
+                            > -->
+                            <v-btn color="black" text @click="getPlan(item)"> Get Plan </v-btn>
+                            <!-- </router-link> -->
                         </v-card-actions>
                     </v-card>
                 </v-col>
@@ -105,7 +105,19 @@
                 return this.toggle_exclusive === 0 ? this.plans.line1 : this.plans.line2
             },
         },
-        methods: {},
+        methods: {
+            getPlan(item) {
+                console.log(item.title)
+                this.$router.push({
+                    name: 'RwCheckout',
+                    params: {
+                        title: item.title,
+                        price: item.price,
+                        lines: item.lines,
+                    },
+                })
+            },
+        },
         mounted() {
             // console.log('PlansCards mounted')
         },
