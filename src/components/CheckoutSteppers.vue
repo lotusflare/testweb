@@ -14,10 +14,8 @@
                             ></v-img>
                         </v-col>
                         <v-col cols="8">
-                            <div class="subheading">{{ this.$route.query.title }}</div>
-                            <div class="subheading">
-                                Get {{ this.$route.query.lines }} line for {{ this.$route.query.price }}
-                            </div>
+                            <div class="subheading">{{ planInfo.title }}</div>
+                            <div class="subheading">Get {{ planInfo.lines }} line for {{ planInfo.price }}</div>
                         </v-col>
                     </v-row>
 
@@ -67,8 +65,8 @@
                 <v-stepper-content step="6">
                     <OrderReview />
                     <!-- <v-card color="grey lighten-1" class="mb-12" height="200px"></v-card> -->
-                    <v-btn color="primary" @click="e6 = 1"> Submit </v-btn>
-                    <v-btn text> Cancel </v-btn>
+                    <v-btn class="mt-4 mr-2" color="primary" @click="submit"> Submit </v-btn>
+                    <v-btn class="mt-4" text> Cancel </v-btn>
                 </v-stepper-content>
             </v-stepper>
         </v-row>
@@ -92,10 +90,25 @@
         data() {
             return {
                 e6: 1,
+                planInfo: {},
+                addressInfo: {},
+                paymentInfo: {},
             }
         },
+        methods: {
+            submit() {
+                // TODO call api to submit order
+                console.log('submit')
+                this.$router.push({
+                    name: 'RwSuccess',
+                })
+            },
+        },
         mounted() {
-            // console.log(this.$route)
+            console.log('CheckoutSteppers mounted')
+
+            this.planInfo = this.$route.params
+
             this.e6 = 1
             // go next step when user clicks on the button in child component
             this.$bus.$on('stepper-next', () => {
@@ -104,16 +117,28 @@
             // get address data from AddAddress component
             this.$bus.$on('address-data', (data) => {
                 console.log('address-data:', data)
+                this.addressInfo = data
             })
             // get account data from AddAccount component
             this.$bus.$on('account-data', (data) => {
                 console.log('account-data:', data)
+                this.accountInfo = data
             })
+            // get payment data from AddPayment component
+            this.$bus.$on('payment-data', (data) => {
+                console.log('payment-data:', data)
+                this.paymentInfo = data
+            })
+            this.$bus.$emit('giveDataToAddPayment', this.planInfo)
         },
-        beforeDestroy() {
-            this.$bus.$off('stepper-next')
-            this.$bus.$off('address-continue')
-        },
+
+        // beforeDestroy() {
+        //     console.log('beforeDestroy');
+        //     this.$bus.$off('stepper-next')
+        //     this.$bus.$off('get-plan')
+        //     this.$bus.$off('address-data')
+        //     this.$bus.$off('account-data')
+        // },
     }
 </script>
 
