@@ -5,8 +5,8 @@
         <v-text-field v-model="city" label="City / Town" required></v-text-field>
         <v-text-field v-model="state" label="State" required></v-text-field>
         <v-text-field v-model="zip" label="Zip Code" required></v-text-field>
-        <v-btn class="mr-4" type="submit" @click="addressContinue"> continue </v-btn>
-        <v-btn @click="clear"> clear </v-btn>
+        <v-btn class="mr-4 mb-2" color="primary" @click="addressContinue"> Continue </v-btn>
+        <v-btn class="mb-2" @click="clear"> clear </v-btn>
     </v-form>
 </template>
 

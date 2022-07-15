@@ -1,5 +1,5 @@
 <template>
-    <validation-observer ref="observer" v-slot="{ invalid }">
+    <validation-observer ref="observer" v-slot="{ }">
         <form @submit.prevent="submit">
             <validation-provider v-slot="{ errors }" name="First Name" rules="required">
                 <v-text-field v-model="firstName" :error-messages="errors" label="First Name" required></v-text-field>
@@ -36,8 +36,9 @@
                     label="Repeat Your Password"
                 ></v-text-field>
             </validation-provider>
-            <v-btn class="mr-4" type="submit" @click="accountContinue"> continue </v-btn>
-            <v-btn @click="clear"> clear </v-btn>
+            <!-- <v-btn class="mr-4" type="submit" @click="accountContinue" color="primary"> continue </v-btn> -->
+            <v-btn class="mr-4 mb-2" color="primary" @click="accountContinue"> Continue </v-btn>
+            <v-btn class="mb-2" @click="clear"> clear </v-btn>
         </form>
     </validation-observer>
 </template>
