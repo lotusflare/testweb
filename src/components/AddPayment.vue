@@ -7,12 +7,14 @@
                     v-model="cardName"
                     label="Cardholder Name"
                     required
+                    :rules="cardNameRules"
+                    :class="{ 'error--text': cardNameError }"
                 ></v-text-field>
                 <v-text-field
                     v-model="cardNumber"
                     label="Card Number"
                     required
-                    type="number"
+                    type="tel"
                     :counter="16"
                     :rules="cardNumberRules"
                     :class="{ 'error--text': cardNumberError }"
@@ -21,16 +23,18 @@
                     v-model="cardExpiry"
                     label="Expiration Date"
                     required
-                    type="date"
+                    type="tel"
                     :counter="4"
                     :rules="cardExpiryRules"
                     :class="{ 'error--text': cardExpiryError }"
                 ></v-text-field>
             </v-form>
-            Today's total: $xx.xx
+            Today's total: {{ planInfo.price }}
             <v-spacer />
             Included tax
         </v-card-text>
+        <v-btn class="mr-4 mb-2" color="primary" @click="paymentContinue"> Continue </v-btn>
+        <v-btn class="mb-2" @click="clear"> clear </v-btn>
     </v-card>
 </template>
 
@@ -42,6 +46,7 @@
                 cardName: '',
                 cardNumber: '',
                 cardExpiry: '',
+                cardNameRules: [(v) => !!v || 'Cardholder Name is required'],
                 cardNumberRules: [
                     (v) => !!v || 'Card number is required',
                     (v) => (v && v.length === 16) || 'Card number must be 16 digits',
@@ -50,9 +55,16 @@
                     (v) => !!v || 'Expiry is required',
                     (v) => (v && v.length === 4) || 'Expiry must be 4 digits',
                 ],
-
+                cardNameError: false,
                 cardNumberError: false,
                 cardExpiryError: false,
+                planInfo: {
+                    // planName: '',
+                    // planPrice: '',
+                    // planLines: '',
+                    // planTax: '0.00',
+                    // planTotal: '',
+                },
             }
         },
         methods: {
@@ -61,9 +73,18 @@
                 this.cardNumber = ''
                 this.cardExpiry = ''
             },
+            paymentContinue() {
+                this.$bus.$emit('payment-data', {
+                    cardName: this.cardName,
+                    cardNumber: this.cardNumber,
+                    cardExpiry: this.cardExpiry,
+                })
+                this.$bus.$emit('stepper-next')
+            },
         },
         watch: {
             cardName() {
+                this.cardNameError = false
             },
             cardNumber() {
                 this.cardNumberError = false
@@ -74,8 +95,14 @@
         },
         computed: {
             invalid() {
-                return 
+                return
             },
+        },
+        mounted() {
+            console.log('AddPayment mounted')
+            this.$bus.$on('giveDataToAddPayment', (data) => {
+                this.planInfo = data
+            })
         },
     }
 </script>
