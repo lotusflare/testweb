@@ -7,8 +7,9 @@
                 <v-col cols="12" class="text-center">
                     <h1>Thank you for your order!</h1>
                     <p>You will receive an email with your order confirmation shortly.</p>
-                    <v-btn color="primary" href="/">Go to Home</v-btn>
-                    
+                    <router-link style="text-decoration: none; color: inherit" to="/">
+                        <v-btn color="primary">Go to Home</v-btn>
+                    </router-link>
                 </v-col>
             </v-row>
         </v-main>
