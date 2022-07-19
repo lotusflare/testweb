@@ -1,82 +1,73 @@
 <template>
     <div>
-        <v-row justify="center" class="mt-10">
-            <!-- <v-card class="d-flex justify-center mt-10" flat tile> -->
-            <v-stepper v-model="e6" vertical elevation="0" color="red">
-                <v-stepper-step :complete="e6 > 1" step="1"> Buy </v-stepper-step>
-                <v-stepper-content step="1">
-                    <v-row no-gutters>
-                        <v-col cols="4">
-                            <v-img
-                                src="../assets/images/onlywhatyouneed-plan-385dfc6572.c4a50b8341.png"
-                                height="50px"
-                                contain
-                            ></v-img>
-                        </v-col>
-                        <v-col cols="8">
-                            <div class="subheading">{{ planInfo.title }}</div>
-                            <div class="subheading">Get {{ planInfo.lines }} line for {{ planInfo.price }}</div>
-                        </v-col>
-                    </v-row>
+        <v-container fluid>
+            <v-row align="center" justify="center" class="mt-10">
+                <v-stepper v-model="e6" vertical elevation="0">
+                    <v-stepper-step editable :complete="e6 > 1" step="1" color="black"> Buy </v-stepper-step>
+                    <v-stepper-content step="1">
+                        <v-row no-gutters>
+                            <v-col cols="4">
+                                <v-img
+                                    src="../assets/images/onlywhatyouneed-plan-385dfc6572.c4a50b8341.png"
+                                    height="50px"
+                                    contain
+                                ></v-img>
+                            </v-col>
+                            <v-col cols="8">
+                                <div class="subheading">{{ planInfo.title }}</div>
+                                <div class="subheading">Get {{ planInfo.lines }} line for {{ planInfo.price }}</div>
+                            </v-col>
+                        </v-row>
 
-                    <br />
-                    <v-btn color="primary" @click="e6 = 2"> Continue </v-btn>
+                        <br />
+                        <v-btn color="black" @click="e6 = 2" dark> Continue </v-btn>
 
-                    <router-link style="text-decoration: none; color: inherit" to="/">
-                        <v-btn text> Cancel </v-btn>
-                    </router-link>
-                </v-stepper-content>
+                        <router-link style="text-decoration: none; color: inherit" to="/">
+                            <v-btn text> Cancel </v-btn>
+                        </router-link>
+                    </v-stepper-content>
 
-                <v-stepper-step editable :complete="e6 > 2" step="2"> Create Account </v-stepper-step>
+                    <v-stepper-step :rules="[() => accountRules]" editable :complete="e6 > 2" step="2" color="black">
+                        Create Account
+                        <small v-if="!accountRules">{{ accountErrorMessage }}</small>
+                    </v-stepper-step>
+                    <v-stepper-content step="2">
+                        <AddAccount />
+                    </v-stepper-content>
 
-                <v-stepper-content step="2">
-                    <AddAccount />
-                    <!-- <v-btn color="primary" @click="e6 = 3"> Continue </v-btn> -->
-                    <!-- <router-link style="text-decoration: none; color: inherit" to="/">
-                        <v-btn text> Cancel </v-btn>
-                    </router-link> -->
-                </v-stepper-content>
+                    <v-stepper-step editable :complete="e6 > 3" step="3" color="black"> Address </v-stepper-step>
+                    <v-stepper-content step="3">
+                        <AddAddress />
+                    </v-stepper-content>
 
-                <v-stepper-step editable :complete="e6 > 3" step="3"> Billing Address </v-stepper-step>
+                    <v-stepper-step editable :complete="e6 > 4" step="4" color="black">
+                        Number Selection
+                    </v-stepper-step>
+                    <v-stepper-content step="4">
+                        <NumberSelection />
+                    </v-stepper-content>
 
-                <v-stepper-content step="3">
-                    <AddAddress />
-                    <!-- <v-card color="grey lighten-1" class="mb-12" height="200px"></v-card> -->
-                    <!-- <v-btn color="primary" @click="e6 = 4"> Continue </v-btn> -->
-                    <!-- <v-btn text> Cancel </v-btn> -->
-                </v-stepper-content>
+                    <v-stepper-step editable :complete="e6 > 5" step="5" color="black"> Payment </v-stepper-step>
+                    <v-stepper-content step="5">
+                        <AddPayment />
+                    </v-stepper-content>
 
-                <v-stepper-step editable :complete="e6 > 4" step="4"> Shipping Address </v-stepper-step>
-                <v-stepper-content step="4">
-                    <AddAddress />
-                    <!-- <v-card color="grey lighten-1" class="mb-12" height="200px"></v-card> -->
-                    <!-- <v-btn color="primary" @click="e6 = 5"> Continue </v-btn> -->
-                    <!-- <v-btn text> Cancel </v-btn> -->
-                </v-stepper-content>
-
-                <v-stepper-step editable :complete="e6 > 5" step="5"> Payment </v-stepper-step>
-                <v-stepper-content step="5">
-                    <AddPayment />
-                    <!-- <v-card color="grey lighten-1" class="mb-12" height="200px"></v-card> -->
-                    <!-- <v-btn color="primary" @click="e6 = 6"> Continue </v-btn> -->
-                    <!-- <v-btn text> Cancel </v-btn> -->
-                </v-stepper-content>
-                <v-stepper-step editable :complete="e6 > 6" step="6"> Review & Submit Order </v-stepper-step>
-                <v-stepper-content step="6">
-                    <OrderReview />
-                    <!-- <v-card color="grey lighten-1" class="mb-12" height="200px"></v-card> -->
-                    <v-btn class="mt-4 mr-2" color="primary" @click="submit"> Submit </v-btn>
-                    <v-btn class="mt-4" text> Cancel </v-btn>
-                </v-stepper-content>
-            </v-stepper>
-        </v-row>
-        <!-- </v-card> -->
+                    <v-stepper-step editable :complete="e6 > 6" step="6" color="black">
+                        Review & Submit Order
+                    </v-stepper-step>
+                    <v-stepper-content step="6">
+                        <OrderReview />
+                    </v-stepper-content>
+                </v-stepper>
+            </v-row>
+        </v-container>
     </div>
 </template>
 
 <script>
     import AddAccount from './AddAccount'
     import AddAddress from './AddAddress'
+    import NumberSelection from './NumberSelection'
     import AddPayment from './AddPayment'
     import OrderReview from './OrderReview'
     export default {
@@ -86,6 +77,7 @@
             AddAddress,
             AddPayment,
             OrderReview,
+            NumberSelection,
         },
         data() {
             return {
@@ -93,43 +85,43 @@
                 planInfo: {},
                 addressInfo: {},
                 paymentInfo: {},
+                accountError: 200,
             }
         },
-        methods: {
-            submit() {
-                // TODO call api to submit order
-                console.log('submit')
-                this.$router.push({
-                    name: 'RwSuccess',
-                })
+        methods: {},
+        computed: {
+            accountRules() {
+                return this.accountError === 200
+            },
+            accountErrorMessage() {
+                switch (this.accountError) {
+                    case 409:
+                        return 'Account already exists'
+                        break
+                    case 400:
+                        return 'Invalid account information'
+                        break
+                    default:
+                        break
+                }
+                // return this.accountError !== 409 ? '' : 'Account already exists'
             },
         },
         mounted() {
             console.log('CheckoutSteppers mounted')
 
-            this.planInfo = this.$route.params
+            this.planInfo = this.$route.query
 
             this.e6 = 1
             // go next step when user clicks on the button in child component
             this.$bus.$on('stepper-next', () => {
                 this.e6++
             })
-            // get address data from AddAddress component
-            this.$bus.$on('address-data', (data) => {
-                console.log('address-data:', data)
-                this.addressInfo = data
-            })
-            // get account data from AddAccount component
-            this.$bus.$on('account-data', (data) => {
-                console.log('account-data:', data)
-                this.accountInfo = data
-            })
-            // get payment data from AddPayment component
-            this.$bus.$on('payment-data', (data) => {
-                console.log('payment-data:', data)
-                this.paymentInfo = data
-            })
             this.$bus.$emit('giveDataToAddPayment', this.planInfo)
+            this.$bus.$on('account-error', (error) => {
+                console.log('account-error', error)
+                this.accountError = error
+            })
         },
 
         // beforeDestroy() {
