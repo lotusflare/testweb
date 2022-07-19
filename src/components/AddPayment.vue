@@ -33,7 +33,7 @@
             <v-spacer />
             Included tax
         </v-card-text>
-        <v-btn class="mr-4 mb-2" color="primary" @click="paymentContinue"> Continue </v-btn>
+        <v-btn class="mr-4 mb-2" color="black" @click="paymentContinue" dark> Continue </v-btn>
         <v-btn class="mb-2" @click="clear"> clear </v-btn>
     </v-card>
 </template>
