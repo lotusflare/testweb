@@ -1,46 +1,63 @@
 <template>
-    <validation-observer ref="observer" v-slot="{ }">
-        <form @submit.prevent="submit">
-            <validation-provider v-slot="{ errors }" name="First Name" rules="required">
-                <v-text-field v-model="firstName" :error-messages="errors" label="First Name" required></v-text-field>
-            </validation-provider>
-            <validation-provider v-slot="{ errors }" name="Last Name" rules="required">
-                <v-text-field v-model="lastName" :error-messages="errors" label="Last Name" required></v-text-field>
-            </validation-provider>
-            <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                <v-text-field v-model="email" :error-messages="errors" label="Email Address" ref="email"></v-text-field>
-            </validation-provider>
-            <validation-provider v-slot="{ errors }" name="repeatEmail" rules="">
-                <v-text-field
-                    v-model="repeatEmail"
-                    :error-messages="errors"
-                    label="Repeat Your Email Address"
-                ></v-text-field>
-                <span>{{ errors[0] }}</span>
-            </validation-provider>
-            <validation-provider v-slot="{ errors }" name="password" rules="required" vid="">
-                <v-text-field
-                    type="password"
-                    ref="password"
-                    v-model="password"
-                    :error-messages="errors"
-                    label="Password"
-                ></v-text-field>
-                <span>{{ errors[0] }}</span>
-            </validation-provider>
-            <validation-provider v-slot="{ errors }" name="repeatPassword" rules="required">
-                <v-text-field
-                    type="password"
-                    v-model="repeatPassword"
-                    :error-messages="errors"
-                    label="Repeat Your Password"
-                ></v-text-field>
-            </validation-provider>
-            <!-- <v-btn class="mr-4" type="submit" @click="accountContinue" color="primary"> continue </v-btn> -->
-            <v-btn class="mr-4 mb-2" color="primary" @click="accountContinue"> Continue </v-btn>
-            <v-btn class="mb-2" @click="clear"> clear </v-btn>
-        </form>
-    </validation-observer>
+    <div>
+        <validation-observer v-if="!isLoggedin()" ref="observer" v-slot="{}">
+            <form @submit.prevent="submit">
+                <validation-provider v-slot="{ errors }" name="First Name" rules="required">
+                    <v-text-field
+                        v-model="firstName"
+                        :error-messages="errors"
+                        label="First Name"
+                        required
+                    ></v-text-field>
+                </validation-provider>
+                <validation-provider v-slot="{ errors }" name="Last Name" rules="required">
+                    <v-text-field v-model="lastName" :error-messages="errors" label="Last Name" required></v-text-field>
+                </validation-provider>
+                <validation-provider v-slot="{ errors }" name="email" rules="required|email">
+                    <v-text-field
+                        v-model="email"
+                        :error-messages="errors"
+                        label="Email Address"
+                        ref="email"
+                    ></v-text-field>
+                </validation-provider>
+                <validation-provider v-slot="{ errors }" name="repeatEmail" rules="">
+                    <v-text-field
+                        v-model="repeatEmail"
+                        :error-messages="errors"
+                        label="Repeat Your Email Address"
+                    ></v-text-field>
+                    <span>{{ errors[0] }}</span>
+                </validation-provider>
+                <validation-provider v-slot="{ errors }" name="password" rules="required" vid="">
+                    <v-text-field
+                        type="password"
+                        ref="password"
+                        v-model="password"
+                        :error-messages="errors"
+                        label="Password"
+                    ></v-text-field>
+                    <span>{{ errors[0] }}</span>
+                </validation-provider>
+                <validation-provider v-slot="{ errors }" name="repeatPassword" rules="required">
+                    <v-text-field
+                        type="password"
+                        v-model="repeatPassword"
+                        :error-messages="errors"
+                        label="Repeat Your Password"
+                    ></v-text-field>
+                </validation-provider>
+                <!-- <v-btn class="mr-4" type="submit" @click="accountContinue" color="primary"> continue </v-btn> -->
+                <v-btn class="mr-4 mb-2" color="black" @click="accountContinue" dark> Continue </v-btn>
+                <v-btn class="mb-2" @click="clear" dark> clear </v-btn>
+            </form>
+        </validation-observer>
+        <div v-else>
+            You are already logged in.
+            <br />
+            <v-btn class="mr-4 mt-2" color="black" @click="accountContinue" dark> Continue </v-btn>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -100,6 +117,7 @@
                     password: this.password,
                 })
                 this.$bus.$emit('stepper-next')
+                console.log('accountContinue')
             },
             clear() {
                 this.firstName = ''
@@ -109,6 +127,11 @@
                 this.password = ''
                 this.repeatPassword = ''
                 this.$refs.observer.reset()
+            },
+
+            //check if logged in
+            isLoggedin() {
+                return localStorage.getItem('api_token')
             },
         },
     }
