@@ -29,6 +29,7 @@
             logout() {
                 localStorage.removeItem('api_token')
                 localStorage.removeItem('user_id')
+                localStorage.removeItem('account_id')
                 // redirect to login page with reload
                 this.$router.go('/')
             },
