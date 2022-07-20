@@ -106,8 +106,6 @@
             },
         },
         mounted() {
-            console.log('CheckoutSteppers mounted')
-
             this.planInfo = this.$route.query
 
             this.e6 = 1
@@ -115,20 +113,16 @@
             this.$bus.$on('stepper-next', () => {
                 this.e6++
             })
-            this.$bus.$emit('giveDataToAddPayment', this.planInfo)
+            this.$bus.$emit('plan-data', this.planInfo)
             this.$bus.$on('account-error', (error) => {
                 console.log('account-error', error)
                 this.accountError = error
             })
         },
-
-        // beforeDestroy() {
-        //     console.log('beforeDestroy');
-        //     this.$bus.$off('stepper-next')
-        //     this.$bus.$off('get-plan')
-        //     this.$bus.$off('address-data')
-        //     this.$bus.$off('account-data')
-        // },
+        beforeDestroy(){
+            this.$bus.$off('stepper-next')
+            this.$bus.$off('account-error')
+        }
     }
 </script>
 
