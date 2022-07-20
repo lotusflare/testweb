@@ -2,7 +2,7 @@
     <div>
         <validation-observer v-if="!isLoggedin()" ref="observer" v-slot="{}">
             <form @submit.prevent="submit">
-                <validation-provider v-slot="{ errors }" name="First Name" rules="required">
+                <validation-provider v-slot="{ errors }" name="First Name" rules="required" hidden>
                     <v-text-field
                         v-model="firstName"
                         :error-messages="errors"
@@ -10,7 +10,7 @@
                         required
                     ></v-text-field>
                 </validation-provider>
-                <validation-provider v-slot="{ errors }" name="Last Name" rules="required">
+                <validation-provider v-slot="{ errors }" name="Last Name" rules="required" hidden>
                     <v-text-field v-model="lastName" :error-messages="errors" label="Last Name" required></v-text-field>
                 </validation-provider>
                 <validation-provider v-slot="{ errors }" name="email" rules="required|email">
