@@ -63,7 +63,7 @@
                                 dealerCode: 'DUBL1',
                                 'Content-Type': 'application/json',
                                 Accept: 'application/json',
-                                Authorization: 'Bearer ' + 'QiHx9vGu4k0rG6gQb6gTG8eVEoTa',
+                                Authorization: 'Bearer ' + '',
                             },
                         }
                     )
@@ -74,6 +74,7 @@
                             this.continueBtn = true
                             this.errorInternet = false
                             this.errorAddress = false
+                            // TODO: send serviceAreas to NumberSelection
                         }
                     })
                     .catch((error) => {
