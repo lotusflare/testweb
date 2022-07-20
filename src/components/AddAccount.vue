@@ -10,6 +10,7 @@
                         required
                     ></v-text-field>
                 </validation-provider>
+                <!-- FIXME: cannot send name to backend -->
                 <validation-provider v-slot="{ errors }" name="Last Name" rules="required" hidden>
                     <v-text-field v-model="lastName" :error-messages="errors" label="Last Name" required></v-text-field>
                 </validation-provider>
@@ -117,7 +118,7 @@
                     password: this.password,
                 })
                 this.$bus.$emit('stepper-next')
-                console.log('accountContinue')
+                // console.log('accountContinue')
             },
             clear() {
                 this.firstName = ''
@@ -126,7 +127,6 @@
                 this.repeatEmail = ''
                 this.password = ''
                 this.repeatPassword = ''
-                this.$refs.observer.reset()
             },
 
             //check if logged in
