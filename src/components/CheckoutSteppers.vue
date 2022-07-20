@@ -97,10 +97,8 @@
                 switch (this.accountError) {
                     case 409:
                         return 'Account already exists'
-                        break
                     case 400:
                         return 'Invalid account information'
-                        break
                     default:
                         break
                 }
