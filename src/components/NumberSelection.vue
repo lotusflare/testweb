@@ -29,7 +29,8 @@
         },
         methods: {
             getNumber() {
-                //
+                // TODO: get number from API
+                // FIXME: cannot get number from getAvailableMsisdn API
             },
             submit() {
                 this.$bus.$emit('number-data', this.items)
