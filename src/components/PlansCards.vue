@@ -98,7 +98,7 @@
         },
         methods: {
             getPlan(item) {
-                console.log(item)
+                console.log('@PlansCards: ', item)
                 if (item.num_of_lines === 1) {
                     this.$router.push({
                         name: 'RwCheckout',
@@ -128,7 +128,7 @@
                     operator_name: 'dishb2b',
                 })
                 .then((response) => {
-                    console.log(response.data)
+                    // console.log(response.data)
                     Object.entries(response.data.offer_by_id).forEach((element) => {
                         // if it is a plan then add to plans
                         if (element[1].data.DISH_Customer_Price) {
@@ -143,7 +143,7 @@
                 .catch((error) => {
                     console.log(error)
                 })
-            console.log(this.plans)
+            // console.log(this.plans)
             // console.log(typeof this.plans[0].DISH_Exclusive_Price)
         },
     }
