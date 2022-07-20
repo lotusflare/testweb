@@ -58,13 +58,7 @@
                 cardNameError: false,
                 cardNumberError: false,
                 cardExpiryError: false,
-                planInfo: {
-                    // planName: '',
-                    // planPrice: '',
-                    // planLines: '',
-                    // planTax: '0.00',
-                    // planTotal: '',
-                },
+                planInfo: {},
             }
         },
         methods: {
@@ -101,7 +95,7 @@
         mounted() {
             console.log('AddPayment mounted')
             this.$bus.$on('giveDataToAddPayment', (data) => {
-                this.planInfo = data
+                this.planInfo = JSON.parse(JSON.stringify(data))
             })
         },
     }
