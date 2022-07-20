@@ -93,8 +93,7 @@
             },
         },
         mounted() {
-            console.log('AddPayment mounted')
-            this.$bus.$on('giveDataToAddPayment', (data) => {
+            this.$bus.$on('plan-data', (data) => {
                 this.planInfo = JSON.parse(JSON.stringify(data))
             })
         },
