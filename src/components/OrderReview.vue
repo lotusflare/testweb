@@ -111,7 +111,6 @@
                     .catch((error) => {
                         console.log('@accountLogin: ', error)
                         this.$bus.$emit('account-error', error.response.status)
-                        // TODO this.$router.push('/failure')
                     })
             },
             // add an account under the user
@@ -150,8 +149,6 @@
                     })
             },
             addAddress() {
-                // TODO
-                // call add address api
                 axios
                     .post(
                         'https://api-project9.lotusflare.com/api/v3/user/add_address',
@@ -173,20 +170,57 @@
                     )
                     .then((response) => {
                         console.log('@addAddress: ', response)
-                        this.$router.push('/success')
+                        this.addPaymentMethod()
+                        // this.$router.push('/success')
                     })
                     .catch((error) => {
                         console.log('@addAddress: ', error)
                         // this.$bus.$emit('address-error', error.response.status)
                     })
             },
+            addPaymentMethod() {
+                // TODO: add payment method
+                this.createOrder()
+            },
             createOrder() {
-                // TODO
+                // FIXME: create order API is not working
                 // call create order api
+                // axios
+                //     .post(
+                //         'https://api-project9.lotusflare.com/api/v3/order/create',
+                //         {
+                //             entity_id: this.planInfo.entityID,
+                //             entity_type: 'offer',
+                //             charged_to: 'external',
+                //             target_id: localStorage.getItem('account_id'),
+                //             target_type: 2,
+                //         },
+                //         {
+                //             headers: {
+                //                 Authorization: 'Bearer ' + localStorage.getItem('api_token'),
+                //             },
+                //         }
+                //     )
+                //     .then((response) => {
+                //         console.log('@createOrder: ', response)
+                //         this.$router.push('/success')
+                //     })
+                //     .catch((error) => {
+                //         console.log('@createOrder: ', error)
+
+                //     })
+                this.activeOrder()
+            },
+            activeOrder() {
+                // TODO: active order
+                this.$router.push('/success')
             },
             submit() {
                 if (localStorage.getItem('api_token') === null) {
                     this.accountLogin()
+                }
+                else {
+                    this.addAddress()
                 }
             },
         },
@@ -195,20 +229,28 @@
             this.$bus.$on('address-data', (data) => {
                 this.addressInfo = JSON.parse(JSON.stringify(data))
                 console.log('@address-data: ', this.addressInfo)
-                console.log(this.addressInfo.street)
+                // console.log(this.addressInfo.street)
             })
             // get account data from AddAccount component
             this.$bus.$on('account-data', (data) => {
                 this.accountInfo = JSON.parse(JSON.stringify(data))
-                console.log(this.accountInfo)
+                console.log('@account-data: ', this.accountInfo)
             })
             // get payment data from AddPayment component
             this.$bus.$on('payment-data', (data) => {
                 this.paymentInfo = JSON.parse(JSON.stringify(data))
+                console.log('@payment-data: ', this.paymentInfo)
             })
-            this.$bus.$on('giveDataToAddPayment', (data) => {
+            this.$bus.$on('plan-data', (data) => {
                 this.planInfo = JSON.parse(JSON.stringify(data))
+                console.log('@plan-data: ', this.planInfo)
             })
+        },
+        beforeDestroy() {
+            this.$bus.$off('address-data')
+            this.$bus.$off('account-data')
+            this.$bus.$off('payment-data')
+            this.$bus.$off('plan-data')
         },
     }
 </script>
