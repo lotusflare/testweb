@@ -4,4 +4,13 @@ module.exports = defineConfig({
     lintOnSave: false,
     // publicPath: '/republicwireless/',
     publicPath: '/testweb/',
+    devServer: {
+        proxy: {
+            '/dishapi': {
+                target: 'https://test.api.dishcloud.io/wireless/retail/network/v1/',
+                changeOrigin: true,
+                pathRewrite: { '^/dishapi': '' },
+            },
+        },
+    },
 })
