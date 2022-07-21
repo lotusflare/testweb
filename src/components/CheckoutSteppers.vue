@@ -100,7 +100,7 @@
                     case 400:
                         return 'Invalid account information'
                     default:
-                        break
+                        return 'Unknown error'
                 }
                 // return this.accountError !== 409 ? '' : 'Account already exists'
             },
@@ -119,10 +119,10 @@
                 this.accountError = error
             })
         },
-        beforeDestroy(){
+        beforeDestroy() {
             this.$bus.$off('stepper-next')
             this.$bus.$off('account-error')
-        }
+        },
     }
 </script>
 
