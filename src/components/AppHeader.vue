@@ -31,7 +31,7 @@
                 localStorage.removeItem('user_id')
                 localStorage.removeItem('account_id')
                 // redirect to login page with reload
-                this.$router.go('/')
+                this.$router.go()
             },
         },
     }
