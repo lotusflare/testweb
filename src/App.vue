@@ -1,22 +1,18 @@
 <template>
-    <div>
-        <router-view />
-    </div>
+    <v-app>
+        <AppHeader />
+        <v-main>
+            <router-view />
+        </v-main>
+    </v-app>
 </template>
 
 <script>
-    import RwHome from '@/pages/RwHome'
-    import RwCheckout from '@/pages/RwCheckout'
-
+    import AppHeader from '@/components/AppHeader'
     export default {
         name: 'App',
-
         components: {
-            RwHome,
-            RwCheckout,
+            AppHeader,
         },
-        data: () => ({
-            //
-        }),
     }
 </script>
