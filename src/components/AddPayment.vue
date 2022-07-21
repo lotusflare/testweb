@@ -88,9 +88,9 @@
             },
         },
         computed: {
-            invalid() {
-                return
-            },
+            // invalid() {
+            //     return
+            // },
         },
         mounted() {
             this.$bus.$on('plan-data', (data) => {
