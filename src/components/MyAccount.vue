@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card v-if="loggedIn" class="mt-10 mx-auto align-center" max-width="800" elevation="0">
+        <v-card v-if="loggedIn" class="my-10 mx-auto align-center" max-width="500" elevation="0">
             <v-card-title class="justify-center">
                 <p class="text-h4 font-weight-bold">Account information</p>
             </v-card-title>
@@ -12,32 +12,83 @@
                 </v-list-item-content>
             </v-list-item>
             <!-- FIXME: no name data -->
-            <!-- <v-list-item-content>
+            <v-list-item two-line>
+                <v-list-item-content>
                     <v-list-item-title>First name</v-list-item-title>
-                    <v-list-item-subtitle>No data yet</v-list-item-subtitle>
+                    <v-list-item-subtitle>xxxx</v-list-item-subtitle>
                 </v-list-item-content>
+            </v-list-item>
+            <v-list-item two-line>
                 <v-list-item-content>
                     <v-list-item-title>Last name</v-list-item-title>
-                    <v-list-item-subtitle>No data yet</v-list-item-subtitle>
-                </v-list-item-content> -->
+                    <v-list-item-subtitle>xxxxxxxx</v-list-item-subtitle>
+                </v-list-item-content>
+            </v-list-item>
             <v-list-item two-line>
                 <v-list-item-content>
                     <v-list-item-title>Email</v-list-item-title>
                     <v-list-item-subtitle>{{ userEmail }}</v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
+            <v-list-item two-line>
+                <v-list-item-content>
+                    <v-list-item-title>MSISDN</v-list-item-title>
+                    <v-list-item-subtitle>xxxxxxxxxxxxxxxx</v-list-item-subtitle>
+                </v-list-item-content>
+            </v-list-item>
 
-            <div v-for="(item, index) in getAccounts" :key="index">
+            <div v-for="item in getAccounts" :key="item.account_info.account_id">
                 <v-list-item two-line>
                     <v-list-item-content>
                         <v-list-item-title>Account ID</v-list-item-title>
                         <v-list-item-subtitle>{{ item.account_info.account_id }}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
-                <div v-for="(address, addressIndex) in item.account_info.addresses" :key="addressIndex">
+                <!-- <div v-for="(address, addressIndex) in item.account_info.addresses" :key="addressIndex">
                     <v-list-item two-line>
                         <v-list-item-content>
                             <v-list-item-title>Address</v-list-item-title>
+                            <v-list-item-subtitle>{{ address.address }}</v-list-item-subtitle>
+                            <v-list-item-subtitle>{{ address.city }} {{ address.zip }}</v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+                </div> -->
+            </div>
+            <v-card-title class="justify-center">
+                <p class="text-h4 font-weight-bold">Order Details</p>
+            </v-card-title>
+            <v-list-item two-line>
+                <v-list-item-content>
+                    <v-list-item-title>Purchased Offer</v-list-item-title>
+                    <v-list-item-subtitle>xxxxxxxxxxxxxx</v-list-item-subtitle>
+                </v-list-item-content>
+                <v-list-item-content>
+                    <v-list-item-title>Price</v-list-item-title>
+                    <v-list-item-subtitle>xxxxxxxxxxxxxx</v-list-item-subtitle>
+                </v-list-item-content>
+            </v-list-item>
+
+            <v-card-title class="justify-center">
+                <p class="text-h4 font-weight-bold">Payment Information</p>
+            </v-card-title>
+            <v-list-item two-line>
+                <v-list-item-content>
+                    <v-list-item-title>Card Number</v-list-item-title>
+                    <v-list-item-subtitle>•••• •••• •••• 4242</v-list-item-subtitle>
+                </v-list-item-content>
+                <v-list-item-content>
+                    <v-list-item-title>Expiration</v-list-item-title>
+                    <v-list-item-subtitle>xx/xx</v-list-item-subtitle>
+                </v-list-item-content>
+            </v-list-item>
+            <v-card-title class="justify-center">
+                <p class="text-h4 font-weight-bold">Address</p>
+            </v-card-title>
+            <div v-for="(item, index) in getAccounts" :key="index">
+                <div v-for="(address, addressIndex) in item.account_info.addresses" :key="addressIndex">
+                    <v-list-item two-line>
+                        <v-list-item-content>
+                            <v-list-item-title>Shipping Address</v-list-item-title>
                             <!-- <v-list-item-subtitle>{{ address }}</v-list-item-subtitle> -->
                             <v-list-item-subtitle>{{ address.address }}</v-list-item-subtitle>
                             <v-list-item-subtitle>{{ address.city }} {{ address.zip }}</v-list-item-subtitle>
@@ -47,7 +98,7 @@
             </div>
         </v-card>
         <div v-else>
-            <h1>You are not logged in.</h1>
+            <h1 class="mt-10 text-center">You are not logged in.</h1>
         </div>
     </div>
 </template>
