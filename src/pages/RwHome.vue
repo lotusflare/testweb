@@ -1,12 +1,7 @@
 <template>
     <div>
-        <v-app>
-            <AppHeader />
-            <v-main>
-                <MainPage />
-                <PlansCards />
-            </v-main>
-        </v-app>
+        <MainPage />
+        <PlansCards />
     </div>
 </template>
 

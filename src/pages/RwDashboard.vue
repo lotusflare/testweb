@@ -1,20 +1,12 @@
 <template>
-    <v-app>
-        <AppHeader />
-        <!-- show user info -->
-        <v-main>
-            <MyAccount />
-        </v-main>
-    </v-app>
+    <MyAccount />
 </template>
 
 <script>
-    import AppHeader from '../components/AppHeader'
-    import MyAccount from '../components/MyAccount'
+    import MyAccount from '@/components/MyAccount'
     export default {
         name: 'RwDashboard',
         components: {
-            AppHeader,
             MyAccount,
         },
     }

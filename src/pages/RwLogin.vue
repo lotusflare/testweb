@@ -1,11 +1,6 @@
 <template>
     <!-- vuetify login page -->
-    <v-app>
-        <AppHeader />
-        <v-main>
-           <AccountLogin />
-        </v-main>
-    </v-app>
+    <AccountLogin />
 </template>
 
 <script>

@@ -1,22 +1,13 @@
 <template>
-    <div>
-        <v-app>
-            <AppHeader />
-            <v-main>
-                <CheckoutSteppers />
-            </v-main>
-        </v-app>
-    </div>
+    <CheckoutSteppers />
 </template>
 
 <script>
-    import AppHeader from '@/components/AppHeader'
     import CheckoutSteppers from '@/components/CheckoutSteppers'
     export default {
         name: 'RwCheckout',
         components: {
             CheckoutSteppers,
-            AppHeader,
         },
     }
 </script>
