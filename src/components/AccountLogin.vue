@@ -61,14 +61,11 @@
                             localStorage.setItem('api_token', response.data.api_token)
                             localStorage.setItem('user_id', response.data.user_id)
                             this.$router.push('/dashboard')
+                            this.$router.go()
                         } else {
-                            // this.$bus.$emit('account-error', 'Invalid login')
                             this.loginError = true
                             this.alert = 'No account found with this email'
                         }
-                        // localStorage.setItem('api_token', response.data.api_token)
-                        // localStorage.setItem('user_id', this.login)
-                        // this.$router.push('/dashboard')
                     })
                     .catch((error) => {
                         console.log(error)
