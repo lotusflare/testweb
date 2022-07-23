@@ -1,7 +1,7 @@
 <template>
-    <v-card elevation="0">
+    <v-card elevation="2" class="mt-0">
         <v-card-title>Pay with card</v-card-title>
-        <v-card-text>
+        <v-card-text class="mt-0">
             <v-form>
                 <v-text-field
                     v-model="cardName"
