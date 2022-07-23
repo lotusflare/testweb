@@ -60,6 +60,7 @@
                         if (response.data.owned_resources !== {}) {
                             localStorage.setItem('api_token', response.data.api_token)
                             localStorage.setItem('user_id', response.data.user_id)
+                            localStorage.setItem('account_id', response.data.account_id)
                             this.$router.push('/dashboard')
                             this.$router.go()
                         } else {
