@@ -2,8 +2,8 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
     transpileDependencies: ['vuetify'],
     lintOnSave: false,
-    // publicPath: '/republicwireless/',
-    publicPath: '/testweb/',
+    publicPath: '/republicwireless/',
+    // publicPath: '/testweb/',
     devServer: {
         proxy: {
             '/dishapi': {
