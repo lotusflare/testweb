@@ -10,7 +10,6 @@
                         required
                     ></v-text-field>
                 </validation-provider>
-                <!-- FIXME: cannot send name to backend -->
                 <validation-provider v-slot="{ errors }" name="Last Name" rules="required" hidden>
                     <v-text-field v-model="lastName" :error-messages="errors" label="Last Name" required></v-text-field>
                 </validation-provider>
@@ -22,35 +21,22 @@
                         ref="email"
                     ></v-text-field>
                 </validation-provider>
-                <validation-provider v-slot="{ errors }" name="repeatEmail" rules="">
-                    <v-text-field
-                        v-model="repeatEmail"
-                        :error-messages="errors"
-                        label="Repeat Your Email Address"
-                    ></v-text-field>
-                    <span>{{ errors[0] }}</span>
-                </validation-provider>
+
                 <validation-provider v-slot="{ errors }" name="password" rules="required" vid="">
                     <v-text-field
-                        type="password"
                         ref="password"
                         v-model="password"
                         :error-messages="errors"
                         label="Password"
+                        :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
+                        :type="showPass ? 'text' : 'password'"
+                        @click:append="showPass = !showPass"
                     ></v-text-field>
-                    <span>{{ errors[0] }}</span>
+                    <!-- <span>{{ errors[0] }}</span> -->
                 </validation-provider>
-                <validation-provider v-slot="{ errors }" name="repeatPassword" rules="required">
-                    <v-text-field
-                        type="password"
-                        v-model="repeatPassword"
-                        :error-messages="errors"
-                        label="Repeat Your Password"
-                    ></v-text-field>
-                </validation-provider>
-                <!-- <v-btn class="mr-4" type="submit" @click="accountContinue" color="primary"> continue </v-btn> -->
-                <v-btn class="mr-4 mb-2" color="black" @click="accountContinue" dark> Continue </v-btn>
-                <v-btn class="mb-2" @click="clear" dark> clear </v-btn>
+
+                <v-btn class="mr-4 my-2" color="black" @click="accountContinue" dark> Continue </v-btn>
+                <v-btn class="my-2" @click="clear" dark> clear </v-btn>
             </form>
         </validation-observer>
         <div v-else>
@@ -106,6 +92,7 @@
                 repeatEmail: '',
                 password: '',
                 repeatPassword: '',
+                showPass: false,
             }
         },
 
