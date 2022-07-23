@@ -12,7 +12,7 @@
             <v-row>
                 <v-col cols="12" md="4" xs="12" v-for="(item, index) in plan" :key="index">
                     <v-sheet color="black" class="mt-10 darken-2 text-center" height="20" width="100%"> </v-sheet>
-                    <v-card height="800px" class="d-flex flex-column" tile>
+                    <v-card height="750px" class="d-flex flex-column" tile>
                         <v-sheet
                             max-width="100"
                             class="text-center rounded-circle mx-auto"
@@ -32,10 +32,10 @@
                                     {{ item.name }}
                                 </div>
                                 <div v-if="toggle_exclusive === 0" class="text-h3 font-weight-black">
-                                    $ {{ item.DISH_Customer_Price }}
+                                    $ {{ item.amounts.primary }}
                                 </div>
                                 <div v-else-if="toggle_exclusive === 1" class="text-h3 font-weight-black">
-                                    $ {{ item.DISH_Customer_Price * 2 }}
+                                    $ {{ item.amounts.primary * 2 }}
                                 </div>
                                 <div v-if="toggle_exclusive === 0" class="subtitle-2">PER LINE FOR DISH CUSTOMERS</div>
                                 <div v-else-if="toggle_exclusive === 1" class="subtitle-2">
@@ -104,7 +104,7 @@
                         name: 'RwCheckout',
                         query: {
                             title: item.name,
-                            price: item.DISH_Customer_Price,
+                            price: item.amounts.primary,
                             lines: item.num_of_lines,
                             entityID: item.entity_id,
                         },
@@ -114,7 +114,7 @@
                         name: 'RwCheckout',
                         query: {
                             title: item.name,
-                            price: item.DISH_Customer_Price * 2,
+                            price: item.amounts.primary * 2,
                             lines: item.num_of_lines,
                             entityID: item.entity_id,
                         },
@@ -131,13 +131,13 @@
                     // console.log(response.data)
                     Object.entries(response.data.offer_by_id).forEach((element) => {
                         // if it is a plan then add to plans
-                        if (element[1].data.DISH_Customer_Price) {
+                        if (element[1].data.amounts.primary) {
                             this.plans.push(element[1].data)
                         }
                     })
                     // sort the plans by price
                     this.plans.sort((a, b) => {
-                        return a.DISH_Customer_Price - b.DISH_Customer_Price
+                        return a.amounts.primary - b.amounts.primary
                     })
                 })
                 .catch((error) => {
