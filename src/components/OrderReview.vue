@@ -3,30 +3,6 @@
         <!-- <v-container fluid> -->
         <v-card elevation="0">
             <v-card-title> Payment </v-card-title>
-            <!--<v-row no-gutters>
-                <v-col cols="auto">
-                    <v-row no-gutters> {{ planInfo.title }} </v-row>
-                    <v-row no-gutters> Tax </v-row>
-                </v-col>
-                <v-spacer />
-                <v-col col="2">
-                    <v-row no-gutters> {{ planInfo.price }} </v-row>
-                    <v-row no-gutters> $0.00 </v-row>
-                </v-col>
-            </v-row>
-            <v-divider></v-divider>
-            <v-row no-gutters>
-                <v-col cols="8">
-                    <v-row no-gutters> Total </v-row>
-                </v-col>
-                <v-spacer />
-                <v-col col="2" align-self="end">
-                    <v-row no-gutters> {{ planInfo.price }} </v-row>
-                </v-col>
-            </v-row> -->
-            <!-- <v-btn class="mt-4 mr-2" color="primary" @click="submit"> Submit </v-btn>
-            <v-btn class="mt-4" text> Cancel </v-btn> -->
-            <!-- </v-container> -->
             <v-simple-table>
                 <tbody>
                     <tr>
@@ -58,11 +34,12 @@
             <v-card-text>
                 <v-checkbox
                     v-model="checkbox"
+                    color="black"
                     label="I agree to the Terms & Conditions, including the AutoPay requirement, and the Privacy Policy."
                 ></v-checkbox>
             </v-card-text>
             <v-card-actions>
-                <v-btn color="black" @click="submit" :dark="checkbox" :disabled="!checkbox"> Submit </v-btn>
+                <v-btn color="black" @click="submit" :dark="checkbox" :disabled="!checkbox" :loading="loading"> Submit </v-btn>
                 <v-btn text> Cancel </v-btn>
             </v-card-actions>
         </v-card>
@@ -79,7 +56,9 @@
                 addressInfo: {},
                 accountInfo: {},
                 paymentInfo: {},
+                numberInfo: {},
                 checkbox: false,
+                loading: false,
             }
         },
         methods: {
@@ -94,12 +73,6 @@
                         // login_secret: 'secret573312093431+1secret',
                         login_secret: this.accountInfo.password,
                         device_id: 'device_id_1148',
-                        // user_properties: {
-                        //     // first_name: 'Jane',
-                        //     first_name: this.accountInfo.firstName,
-                        //     // last_name: 'Doe',
-                        //     last_name: this.accountInfo.lastName,
-                        // },
                     })
                     .then((response) => {
                         console.log('@accountLogin: ', response)
@@ -111,6 +84,7 @@
                     .catch((error) => {
                         console.log('@accountLogin: ', error)
                         this.$bus.$emit('account-error', error.response.status)
+                        this.loading = false
                     })
             },
             // add an account under the user
@@ -146,6 +120,7 @@
                         console.log(error)
                         // this.$router.push('/failure')
                         this.$bus.$emit('account-error', error.response.status)
+                        this.loading = false
                     })
             },
             addAddress() {
@@ -176,50 +151,69 @@
                     .catch((error) => {
                         console.log('@addAddress: ', error)
                         // this.$bus.$emit('address-error', error.response.status)
+                        this.loading = false
                     })
             },
             addPaymentMethod() {
-                // TODO: add payment method
+                // save the payment info to local storage for temp
+                const localStoragePaymentInfo = {
+                    accountId: localStorage.getItem('account_id'),
+                    last4: this.paymentInfo.cardNumber.slice(-4),
+                    cardName: this.paymentInfo.cardName,
+                    cardExpiry: this.paymentInfo.cardExpiry,
+                }
+                localStorage.setItem('paymentInfo', JSON.stringify(localStoragePaymentInfo))
+
                 this.createOrder()
             },
             createOrder() {
-                // FIXME: create order API is not working
                 // call create order api
-                // axios
-                //     .post(
-                //         'https://api-project9.lotusflare.com/api/v3/order/create',
-                //         {
-                //             entity_id: this.planInfo.entityID,
-                //             entity_type: 'offer',
-                //             charged_to: 'external',
-                //             target_id: localStorage.getItem('account_id'),
-                //             target_type: 2,
-                //         },
-                //         {
-                //             headers: {
-                //                 Authorization: 'Bearer ' + localStorage.getItem('api_token'),
-                //             },
-                //         }
-                //     )
-                //     .then((response) => {
-                //         console.log('@createOrder: ', response)
-                //         this.$router.push('/success')
-                //     })
-                //     .catch((error) => {
-                //         console.log('@createOrder: ', error)
+                axios
+                    .post(
+                        'https://api-project9.lotusflare.com/api/v3/orderoe/create_order',
+                        {
+                            entity_id: this.planInfo.entityID,
+                            entity_type: 'offer',
+                            target_id: localStorage.getItem('account_id'),
+                            target_type: 2,
 
-                //     })
-                this.activeOrder()
+                            service_area_code: '006433001415',
+                            billing_market: 'GAC',
+                            billing_sub_market: '724',
+
+                            device_technology_type: 'GSM',
+                            msisdn: this.numberInfo.number,
+                            iccid: '89011804330026064543',
+                            imei: '421023025000360',
+                            imei_type: 'W7',
+                        },
+                        {
+                            headers: {
+                                Authorization: localStorage.getItem('api_token'),
+                            },
+                        }
+                    )
+                    .then((response) => {
+                        console.log('@createOrder: ', response)
+                        // this.activeOrder()
+                        this.loading = false
+                        this.$router.push('/success')
+                    })
+                    .catch((error) => {
+                        console.log('@createOrder: ', error)
+                        
+                        this.loading = false
+                    })
             },
-            activeOrder() {
-                // TODO: active order
-                this.$router.push('/success')
-            },
+            // activeOrder() {
+            //     // active order
+            //     this.$router.push('/success')
+            // },
             submit() {
+                this.loading = true
                 if (localStorage.getItem('api_token') === null) {
                     this.accountLogin()
-                }
-                else {
+                } else {
                     this.addAddress()
                 }
             },
@@ -245,11 +239,16 @@
                 this.planInfo = JSON.parse(JSON.stringify(data))
                 console.log('@plan-data: ', this.planInfo)
             })
+            this.$bus.$on('number-data', (data) => {
+                this.numberInfo = JSON.parse(JSON.stringify(data))
+                console.log('@number-data: ', this.numberInfo)
+            })
         },
         beforeDestroy() {
             this.$bus.$off('address-data')
             this.$bus.$off('account-data')
             this.$bus.$off('payment-data')
+            this.$bus.$off('number-data')
             this.$bus.$off('plan-data')
         },
     }
