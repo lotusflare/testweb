@@ -72,7 +72,7 @@
                 //             this.continueBtn = true
                 //             this.errorInternet = false
                 //             this.errorAddress = false
-                //             // TODO: send serviceAreas to NumberSelection
+                //             // send serviceAreas to NumberSelection
                 //         }
                 //     })
                 //     .catch((error) => {
