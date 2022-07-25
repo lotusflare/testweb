@@ -39,7 +39,9 @@
                 ></v-checkbox>
             </v-card-text>
             <v-card-actions>
-                <v-btn color="black" @click="submit" :dark="checkbox" :disabled="!checkbox" :loading="loading"> Submit </v-btn>
+                <v-btn color="black" @click="submit" :dark="checkbox" :disabled="!checkbox" :loading="loading">
+                    Submit
+                </v-btn>
                 <v-btn text> Cancel </v-btn>
             </v-card-actions>
         </v-card>
@@ -195,20 +197,14 @@
                     )
                     .then((response) => {
                         console.log('@createOrder: ', response)
-                        // this.activeOrder()
                         this.loading = false
                         this.$router.push('/success')
                     })
                     .catch((error) => {
                         console.log('@createOrder: ', error)
-                        
                         this.loading = false
                     })
             },
-            // activeOrder() {
-            //     // active order
-            //     this.$router.push('/success')
-            // },
             submit() {
                 this.loading = true
                 if (localStorage.getItem('api_token') === null) {
