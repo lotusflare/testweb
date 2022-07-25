@@ -300,7 +300,7 @@
                             // 1 is order info
                             this.getAccounts.push(responses[0].data)
                             this.getOrders.push(responses[1].data)
-                            console.log('@getAccounts:', this.getAccounts)
+                            // console.log('@getAccounts:', this.getAccounts)
                             console.log('@getOrders:', this.getOrders)
                         })
                         .catch((error) => {
