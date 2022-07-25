@@ -18,7 +18,11 @@
         data() {
             return {
                 // text: 'Number Selection',
-                items: [{ text: '9105147869' }, { text: '9105147870' }, { text: '9105147871' }],
+                items: [
+                    { text: this.randomPhoneNumber() },
+                    { text: this.randomPhoneNumber() },
+                    { text: this.randomPhoneNumber() },
+                ],
                 getNumberClicked: false,
                 numberData: {
                     number: '',
@@ -32,6 +36,11 @@
             submit() {
                 this.$bus.$emit('number-data', this.numberData)
                 this.$bus.$emit('stepper-next')
+            },
+            // random phone number generator
+            randomPhoneNumber() {
+                var phoneNumber = Math.floor(Math.random() * 9999999999) + 1000000000
+                return phoneNumber
             },
         },
     }
