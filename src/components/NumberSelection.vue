@@ -40,7 +40,7 @@
             // random phone number generator
             randomPhoneNumber() {
                 var phoneNumber = Math.floor(Math.random() * 9999999999) + 1000000000
-                return phoneNumber
+                return phoneNumber.toString()
             },
         },
     }
