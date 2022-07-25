@@ -56,7 +56,7 @@
                         device_id: 'device_id_5209',
                     })
                     .then((response) => {
-                        console.log(response.data.owned_resources)
+                        // console.log(response.data.owned_resources)
                         if (response.data.owned_resources !== {}) {
                             localStorage.setItem('api_token', response.data.api_token)
                             localStorage.setItem('user_id', response.data.user_id)
