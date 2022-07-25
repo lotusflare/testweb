@@ -197,11 +197,47 @@
                     )
                     .then((response) => {
                         console.log('@createOrder: ', response)
+                        // this.activeOrder()
+                        this.addSubscriber()
+                        // this.loading = false
+                        // this.$router.push('/success')
+                    })
+                    .catch((error) => {
+                        console.log('@createOrder: ', error)
+
+                        this.loading = false
+                    })
+            },
+            // activeOrder() {
+            //     // active order
+            //     this.$router.push('/success')
+            // },
+            addSubscriber() {
+                axios
+                    .post(
+                        'https://api-project9.lotusflare.com/api/v3/user/add_subscriber/',
+                        {
+                            target_id: localStorage.getItem('account_id'),
+                            target_type: 2,
+                            subscriber_info: {
+                                msisdn: this.numberInfo.number,
+                            },
+                        },
+                        {
+                            headers: {
+                                Authorization: localStorage.getItem('api_token'),
+                            },
+                        }
+                    )
+                    .then((response) => {
+                        console.log('@addSubscriber: ', response)
+                        // this.activeOrder()
                         this.loading = false
                         this.$router.push('/success')
                     })
                     .catch((error) => {
-                        console.log('@createOrder: ', error)
+                        console.log('@addSubscriber: ', error)
+
                         this.loading = false
                     })
             },
