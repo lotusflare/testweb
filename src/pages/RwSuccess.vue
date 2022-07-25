@@ -3,9 +3,9 @@
     <v-row>
         <v-col cols="12" class="mt-10 text-center">
             <h1>Thank you for your order!</h1>
-            <router-link style="text-decoration: none; color: inherit" to="/dashboard">
-                <v-btn color="black" dark class="mt-4">Go to Dashboard</v-btn>
-            </router-link>
+            <!-- <router-link style="text-decoration: none; color: inherit" to="/dashboard"> -->
+            <v-btn color="black" dark class="mt-4" @click="goToDashboard">Go to Dashboard</v-btn>
+            <!-- </router-link> -->
         </v-col>
     </v-row>
 </template>
@@ -16,6 +16,12 @@
         name: 'SubmitSuccess',
         components: {
             AppHeader,
+        },
+        methods: {
+            goToDashboard() {
+                this.$router.push('/dashboard')
+                this.$router.go()
+            },
         },
     }
 </script>
