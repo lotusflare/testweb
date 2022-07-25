@@ -33,7 +33,7 @@
             <v-list-item two-line>
                 <v-list-item-content>
                     <v-list-item-title>MSISDN</v-list-item-title>
-                    <v-list-item-subtitle>xxxxxxxxxxxxxxxx</v-list-item-subtitle>
+                    <v-list-item-subtitle>{{ MSISDN }}</v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
 
@@ -76,20 +76,22 @@
                     >
                         <v-list-item-content>
                             <v-list-item-title>Purchased offer name</v-list-item-title>
-                            <v-list-item-subtitle>{{ subOrder.entity_name }}</v-list-item-subtitle>
-                            <v-list-item-subtitle v-if="subOrder.external_id.slice(-5) === '2lines'"></v-list-item-subtitle>
-                            
+                            <v-list-item-subtitle
+                                >{{ subOrder.entity_name }}
+                                <span v-if="subOrder.external_id.slice(-5) === '2line'"
+                                    >2 lines</span
+                                ></v-list-item-subtitle
+                            >
                         </v-list-item-content>
-                        <!-- <v-list-item-content>
-                            <v-list-item-title>Purchased offer name</v-list-item-title>
-                            <v-list-item-subtitle>{{ subOrder.external_id }}</v-list-item-subtitle>
-                        </v-list-item-content> -->
                         <v-list-item-content
                             v-for="(recurrence, recurrenceIndex) in subOrder.recurrences"
                             :key="recurrenceIndex"
                         >
                             <v-list-item-title>Price</v-list-item-title>
-                            <v-list-item-subtitle>{{ recurrence.charged_amount }}</v-list-item-subtitle>
+                            <v-list-item-subtitle v-if="subOrder.external_id.slice(-5) === '2line'">{{
+                                recurrence.charged_amount * 2
+                            }}</v-list-item-subtitle>
+                            <v-list-item-subtitle v-else>{{ recurrence.charged_amount }}</v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
                     <v-divider></v-divider>
@@ -152,7 +154,7 @@
                 lastName: '',
                 userEmail: '',
                 // MSISDNs: [],
-                // MSISDN: '',
+                MSISDN: '',
 
                 loggedIn: false,
                 accountIDs: [], // save the account ids under user's account
@@ -274,8 +276,17 @@
                         }
                     )
                     .then((response) => {
+                        // console.log('@getUser: ', response.data)
                         this.accountIDs = response.data.user_info.account_ids
-                        this.userEmail = response.data.user_info.creds[0].id
+                        for (let index = 0; index < response.data.user_info.creds.length; index++) {
+                            if (response.data.user_info.creds[index].id_type === 'EMAIL_SECRET') {
+                                this.userEmail = response.data.user_info.creds[index].id
+                            } else if (response.data.user_info.creds[index].id_type === 'MSISDN') {
+                                this.MSISDN = response.data.user_info.creds[index].id
+                            } else {
+                                console.log('no email or msisdn')
+                            }
+                        }
                         this.userId = response.data.user_info.user_id
                     })
                     .catch((error) => {
