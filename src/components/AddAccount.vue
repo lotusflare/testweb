@@ -98,7 +98,13 @@
 
         methods: {
             accountContinue() {
-                this.$bus.$emit('account-data', {
+                // this.$bus.$emit('account-data', {
+                //     firstName: this.firstName,
+                //     lastName: this.lastName,
+                //     email: this.email,
+                //     password: this.password,
+                // })
+                this.$store.commit('setAccount', {
                     firstName: this.firstName,
                     lastName: this.lastName,
                     email: this.email,
