@@ -49,6 +49,7 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex'
     import axios from 'axios'
     export default {
         name: 'OrderReview',
@@ -250,6 +251,11 @@
                 }
             },
         },
+        computed: {
+            ...mapState({
+                accountInfo: (state) => state.checkout,
+            }),
+        },
         mounted() {
             // get address data from AddAddress component
             this.$bus.$on('address-data', (data) => {
@@ -258,10 +264,12 @@
                 // console.log(this.addressInfo.street)
             })
             // get account data from AddAccount component
-            this.$bus.$on('account-data', (data) => {
-                this.accountInfo = JSON.parse(JSON.stringify(data))
-                console.log('@account-data: ', this.accountInfo)
-            })
+            // this.$bus.$on('account-data', (data) => {
+            //     this.accountInfo = JSON.parse(JSON.stringify(data))
+            //     console.log('@account-data: ', this.accountInfo)
+            // })
+            // this.$store.
+
             // get payment data from AddPayment component
             this.$bus.$on('payment-data', (data) => {
                 this.paymentInfo = JSON.parse(JSON.stringify(data))
