@@ -79,20 +79,23 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    import { mapState } from 'vuex'
     export default {
         name: 'PlansCards',
         data() {
             return {
-                plans: [],
+                // plans: [],
                 toggle_exclusive: 0,
             }
         },
         computed: {
+            ...mapState({
+                offers: (state) => state.home.offers,
+            }),
             // filter the plans line number based on the toggle_exclusive value
             // toggle_exclusive should plus 1 to get the line number
             plan() {
-                return this.plans.filter((item) => item.num_of_lines === this.toggle_exclusive + 1)
+                return this.offers.filter((item) => item.num_of_lines === this.toggle_exclusive + 1)
             },
             // when num_of_lines is 2, the 2 lines price should be times 2
         },
@@ -123,28 +126,7 @@
             },
         },
         mounted() {
-            axios
-                .post('https://api-project9.lotusflare.com/api/v3/catalog/get_offers', {
-                    operator_name: 'dishb2b',
-                })
-                .then((response) => {
-                    // console.log(response.data)
-                    Object.entries(response.data.offer_by_id).forEach((element) => {
-                        // if it is a plan then add to plans
-                        if (element[1].data.amounts.primary) {
-                            this.plans.push(element[1].data)
-                        }
-                    })
-                    // sort the plans by price
-                    this.plans.sort((a, b) => {
-                        return a.amounts.primary - b.amounts.primary
-                    })
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-            // console.log(this.plans)
-            // console.log(typeof this.plans[0].DISH_Exclusive_Price)
+            this.$store.dispatch('getOffers')
         },
     }
 </script>
