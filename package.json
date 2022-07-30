@@ -11,10 +11,12 @@
     "dependencies": {
         "axios": "^0.27.2",
         "core-js": "^3.8.3",
+        "nprogress": "^0.2.0",
         "vee-validate": "3",
         "vue": "^2.6.14",
         "vue-router": "3",
-        "vuetify": "^2.6.0"
+        "vuetify": "^2.6.0",
+        "vuex": "3"
     },
     "devDependencies": {
         "@babel/core": "^7.12.16",
